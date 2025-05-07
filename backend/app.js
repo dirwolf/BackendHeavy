@@ -1,17 +1,17 @@
 import express from 'express';
 import cors from 'cors';
-import { cookie } from 'express/lib/response';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(cors({
-    origin: process_params.env.CORS_ORIGIN,
-    credentials : true
+    origin: process.env.CORS_ORIGIN,
+    credentials: true
     // Allow cookies, authorization headers, or TLS client certificates to be sent
     //  from the frontend (cross-origin) to the backend.
 }))
 
-app.use(express.json({limit : "16kb"}));
-app.use(express.urlencoded({extended : true, limit : "16kb"}));
+app.use(express.json({limit: "16kb"}));
+app.use(express.urlencoded({extended: true, limit: "16kb"}));
 //Parses form data (like from HTML <form> submissions).
 app.use(express.static('public'));
 //Serve static files from the public directory.
