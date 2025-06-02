@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import authRoutes from './routes/auth.routes.js';
 
 const app = express();
 app.use(cors({
@@ -20,5 +21,8 @@ app.use(express.static('public'));
 //This middleware will serve files from the public directory at the root URL.
 //For example, if you have a file public/image.png, it would be accessible at http://localhost:8000/image.png.
 app.use(cookieParser());
+
+// Routes
+app.use("/api/v1/auth", authRoutes);
 
 export { app };

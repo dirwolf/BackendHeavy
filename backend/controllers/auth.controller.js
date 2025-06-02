@@ -81,10 +81,14 @@ const loginUser = asyncHandler(async (req, res) => {
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
 
+    // get user without sensitive fields
+    const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
+
     // send cookie
     const options = {
         httpOnly: true,
-        secure: true
+        secure: true,
+        sameSite: "strict"
     };
 
     // return response
@@ -96,9 +100,7 @@ const loginUser = asyncHandler(async (req, res) => {
             new ApiResponse(
                 200,
                 {
-                    user: user,
-                    accessToken,
-                    refreshToken,
+                    user: loggedInUser
                 },
                 "User logged In Successfully"
             )
@@ -120,7 +122,8 @@ const logoutUser = asyncHandler(async (req, res) => {
 
     const options = {
         httpOnly: true,
-        secure: true
+        secure: true,
+        sameSite: "strict"
     };
 
     return res
