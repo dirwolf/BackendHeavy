@@ -52,11 +52,14 @@ const userSchema = new Schema(
     }
 )
 
+// we used function instead of arrow function because we need to use "this" keyword.
+// we used async function because we need to use "await" 
 userSchema.pre("save", async function (next) {
-    if(!this.isModified("password")) return next();
+  // only if password is modified then we hash it
+  if (!this.isModified("password")) return next();
 
-    this.password = await bcrypt.hash(this.password, 10)
-    next()
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
 })
 
 userSchema.methods.isPasswordCorrect = async function(password){
@@ -85,6 +88,7 @@ userSchema.methods.generateRefreshToken = function(){
         },
         process.env.REFRESH_TOKEN_SECRET,
         {
+            
             expiresIn: process.env.REFRESH_TOKEN_EXPIRY
         }
     )

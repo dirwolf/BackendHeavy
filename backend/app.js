@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-
 const app = express();
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -20,5 +19,18 @@ app.use(express.static('public'));
 //This middleware will serve files from the public directory at the root URL.
 //For example, if you have a file public/image.png, it would be accessible at http://localhost:8000/image.png.
 app.use(cookieParser());
+
+// Routes
+
+// routes import
+import userRouter from './routes/user.routes.js'
+
+
+
+
+// routes declaration
+app.use("/api/v1/users", userRouter);
+
+
 
 export { app };
