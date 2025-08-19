@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import authRoutes from './routes/auth.routes.js';
-
 const app = express();
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -23,6 +21,16 @@ app.use(express.static('public'));
 app.use(cookieParser());
 
 // Routes
-app.use("/api/v1/auth", authRoutes);
+
+// routes import
+import userRouter from './routes/user.routes.js'
+
+
+
+
+// routes declaration
+app.use("/api/v1/users", userRouter);
+
+
 
 export { app };
