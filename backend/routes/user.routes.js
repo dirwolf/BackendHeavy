@@ -3,13 +3,20 @@ import {
     loginUser, 
     logoutUser, 
     registerUser, 
-    refreshAccessToken
+    refreshAccessToken,
+    fun,
+    getAllUsers
 } from "../controllers/user.controller.js";
 import {upload} from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 
 const router = Router()
+
+
+router.route("/welcome").get(
+    fun
+);
 
 router.route("/register").post(
     // multer upload is being used as a middleware which is necessary 
@@ -34,6 +41,7 @@ router.route("/register").post(
     )
 
 router.route("/login").post(loginUser)
+router.route("/all").get(verifyJWT, getAllUsers)
 
 //secured routes
 router.route("/logout").post(verifyJWT,  logoutUser)
